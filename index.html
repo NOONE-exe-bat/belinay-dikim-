@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Konum</title>
+</head>
+<body>
+  <h2>Konum alınıyor...</h2>
+  <p id="sonuc"></p>
+
+  <script>
+    const sonuc = document.getElementById("sonuc");
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          const zaman = new Date().toLocaleString("tr-TR");
+
+          sonuc.innerHTML = `
+            <b>Zaman:</b> ${zaman}<br>
+            <b>Enlem:</b> ${lat}<br>
+            <b>Boylam:</b> ${lon}<br><br>
+            <a href="https://maps.google.com/?q=${lat},${lon}" target="_blank">
+              Google Maps'te Gör
+            </a>
+          `;
+        },
+        (hata) => {
+          sonuc.innerText = "İzin verilmedi veya konum alınamadı.";
+        }
+      );
+    } else {
+      sonuc.innerText = "Tarayıcı desteklemiyor.";
+    }
+  </script>
+</body>
+</html>
